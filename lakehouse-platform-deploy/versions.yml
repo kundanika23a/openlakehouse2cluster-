@@ -1,0 +1,155 @@
+---
+# Single source of truth. Profile stable is what deploy.yml uses.
+# Artifact tasks must re-resolve the latest patch in a pinned line when
+# resolve_patch: true, then record the exact artifact in artifacts/manifest.lock.yml.
+# Change a version only in this file. See docs/DECISIONS.md for the 26 Sep 2026 checks.
+
+profile: stable
+
+components:
+  ozone:
+    stable: "2.2.1"
+    fallback: "2.1.2"
+    jvm: 21
+    jvm_fallback: 17
+    resolve_patch: false
+    archive: "ozone-{version}.tar.gz"
+    src_archive: "ozone-{version}-src.tar.gz"
+    url: "https://downloads.apache.org/ozone/{version}/ozone-{version}.tar.gz"
+    keys_url: "https://downloads.apache.org/ozone/KEYS"
+  hadoop:
+    stable: "3.5.0"
+    fallback: "3.4.3"
+    jvm: 17
+    resolve_patch: false
+    archive: "hadoop-{version}.tar.gz"
+    url: "https://downloads.apache.org/hadoop/common/hadoop-{version}/hadoop-{version}.tar.gz"
+    keys_url: "https://downloads.apache.org/hadoop/common/KEYS"
+  zookeeper:
+    stable: "3.9.6"
+    fallback: "3.9.6"
+    jvm: 17
+    resolve_patch: true
+    patch_line: "3.9"
+    archive: "apache-zookeeper-{version}-bin.tar.gz"
+    url: "https://downloads.apache.org/zookeeper/zookeeper-{version}/apache-zookeeper-{version}-bin.tar.gz"
+    keys_url: "https://downloads.apache.org/zookeeper/KEYS"
+  hive:
+    stable: "4.2.1"
+    fallback: "4.1.3"
+    jvm: 21
+    resolve_patch: false
+    archive: "apache-hive-{version}-bin.tar.gz"
+    url: "https://downloads.apache.org/hive/hive-{version}/apache-hive-{version}-bin.tar.gz"
+    keys_url: "https://downloads.apache.org/hive/KEYS"
+  spark:
+    stable: "4.1.3"
+    fallback: "3.5.6"
+    jvm: 17
+    resolve_patch: true
+    patch_line: "4.1"
+    archive: "spark-{version}-bin-hadoop3.tgz"
+    url: "https://downloads.apache.org/spark/spark-{version}/spark-{version}-bin-hadoop3.tgz"
+    keys_url: "https://downloads.apache.org/spark/KEYS"
+  iceberg:
+    stable: "1.11.0"
+    fallback: "1.10.2"
+    resolve_patch: true
+    patch_line: "1.11"
+    spark_runtime: "iceberg-spark-runtime-{spark_major}_{scala}-{version}.jar"
+    url: "https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-4.1_2.13/{version}/iceberg-spark-runtime-4.1_2.13-{version}.jar"
+  kyuubi:
+    stable: "1.11.1"
+    fallback: "1.10.3"
+    jvm: 17
+    resolve_patch: true
+    archive: "apache-kyuubi-{version}-bin.tgz"
+    url: "https://downloads.apache.org/kyuubi/kyuubi-{version}/apache-kyuubi-{version}-bin.tgz"
+    keys_url: "https://downloads.apache.org/kyuubi/KEYS"
+  trino:
+    stable: "483"
+    fallback: "483"
+    jvm: 25
+    resolve_patch: true
+    archive: "trino-server-{version}.tar.gz"
+    url: "https://github.com/trinodb/trino/releases/download/{version}/trino-server-{version}.tar.gz"
+    cli_url: "https://github.com/trinodb/trino/releases/download/{version}/trino-cli-{version}"
+  kafka:
+    stable: "4.3.1"
+    fallback: "3.9.2"
+    jvm: 17
+    scala: "2.13"
+    resolve_patch: false
+    archive: "kafka_{scala}-{version}.tgz"
+    url: "https://downloads.apache.org/kafka/{version}/kafka_2.13-{version}.tgz"
+    keys_url: "https://downloads.apache.org/kafka/KEYS"
+  ranger:
+    stable: "2.9.0"
+    fallback: "2.9.0"
+    jvm: 8
+    build: true
+    archive: "ranger-{version}-admin.tar.gz"
+    src_archive: "apache-ranger-{version}.tar.gz"
+    url: "https://downloads.apache.org/ranger/{version}/apache-ranger-{version}.tar.gz"
+    keys_url: "https://downloads.apache.org/ranger/KEYS"
+  atlas:
+    stable: "2.5.0"
+    fallback: "2.5.0"
+    # This 2.5.0 graph module clears Field.modifiers to register the
+    # PostgreSQL store. Java 12 and later removed that field, so Atlas
+    # runs on Java 11.
+    jvm: 11
+    build: true
+    src_archive: "apache-atlas-{version}-sources.tar.gz"
+    url: "https://downloads.apache.org/atlas/{version}/apache-atlas-{version}-sources.tar.gz"
+    keys_url: "https://downloads.apache.org/atlas/KEYS"
+  solr:
+    stable: "8.11.4"
+    fallback: "8.11.4"
+    jvm: 11
+    resolve_patch: false
+    archive: "solr-{version}.tgz"
+    url: "https://downloads.apache.org/lucene/solr/{version}/solr-{version}.tgz"
+    keys_url: "https://downloads.apache.org/solr/KEYS"
+  knox:
+    stable: "2.1.0"
+    fallback: "2.1.0"
+    jvm: 17
+    archive: "knox-{version}.tar.gz"
+    url: "https://downloads.apache.org/knox/{version}/knox-{version}.tar.gz"
+    keys_url: "https://downloads.apache.org/knox/KEYS"
+  postgresql:
+    stable: "16"
+    fallback: "15"
+  polaris:
+    stable: "1.7.0"
+    fallback: "1.7.0"
+    jvm: 21
+    optional: true
+    url: "https://downloads.apache.org/polaris/{version}/polaris-{version}.tar.gz"
+  airflow:
+    optional: true
+    stable: "3.0.2"
+  flink:
+    optional: true
+    stable: "2.1.0"
+    iceberg_runtime: "1.11.0"
+  hue:
+    optional: true
+    stable: "4.12.0"
+
+jdks:
+  - major: 8
+  - major: 11
+  - major: 17
+  - major: 21
+  - major: 25
+
+monitoring:
+  prometheus: latest_stable
+  alertmanager: latest_stable
+  grafana: latest_stable
+  loki: latest_stable
+  alloy: latest_stable
+  node_exporter: latest_stable
+  jmx_exporter: latest_stable

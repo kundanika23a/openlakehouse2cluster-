@@ -1,0 +1,28 @@
+---
+profiles:
+  min:
+    exclude_paths:
+      - reports/
+      - artifacts/
+      - .ansible/
+    skip_list:
+      - yaml[line-length]
+  production: {}
+
+offline: false
+strict: true
+mock_modules: []
+enable_list:
+  - args
+  - empty-string-compare
+  - no-log-password
+  - name
+  - risky-file-permissions
+exclude_paths:
+  - reports/
+  - artifacts/
+  - .ansible/
+  - inventories/prod/group_vars/all/vault.yml
+warn_list: []
+skip_list:
+  - yaml[line-length]
